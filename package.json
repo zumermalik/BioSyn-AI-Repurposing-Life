@@ -1,0 +1,19 @@
+{
+  "name": "biosyn-ai-ingestion",
+  "version": "1.0.0",
+  "description": "Async data ingestion for BioSyn AI",
+  "main": "src/ingestion/fetch_pdb.ts",
+  "scripts": {
+    "ingest": "ts-node src/ingestion/fetch_pdb.ts"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "fs-extra": "^11.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "@types/node": "^20.8.0",
+    "@types/fs-extra": "^11.0.0"
+  }
+}

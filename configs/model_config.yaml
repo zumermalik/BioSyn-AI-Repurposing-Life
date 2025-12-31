@@ -1,0 +1,18 @@
+project_name: "BioSyn AI"
+version: "0.1.0-alpha"
+
+data:
+  raw_path: "./data/raw"
+  processed_path: "./data/processed"
+  target_protein: "5R82" # Example COVID-19 Main Protease
+
+model:
+  type: "GeometricDiffusion"
+  embedding_dim: 128
+  learning_rate: 0.001
+  batch_size: 32
+  epochs: 100
+
+compute:
+  device: "cuda" # or "cpu"
+  use_colab: false
