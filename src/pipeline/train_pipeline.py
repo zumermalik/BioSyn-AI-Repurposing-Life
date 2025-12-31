@@ -12,7 +12,7 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 from src.models.gnn_encoder import GNNEncoder
 from src.models.diffusion import BioDiffusion
 from src.utils.data_loader import BioSynDataset
-from torch_geometric.data import Batch
+from torch_geometric.data import Batch, Data
 
 def collate_fn(batch_list):
     """

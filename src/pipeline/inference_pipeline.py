@@ -4,21 +4,28 @@ import sys
 from pathlib import Path
 import argparse
 
-# Path hacking for imports
-sys.path.append(str(Path(__file__).parent.parent.parent))
+# --- PATH FIX: ENSURE ROOT IS FOUND ---
+# This looks 3 levels up from this file to find the project root
+# (src/pipeline/inference_pipeline.py -> src/pipeline -> src -> ROOT)
+current_file = Path(__file__).resolve()
+project_root = current_file.parent.parent.parent
+sys.path.append(str(project_root))
+# --------------------------------------
 
 from src.models.gnn_encoder import GNNEncoder
 from src.models.diffusion import BioDiffusion
 from src.ingestion.parser import ProteinParser
 from src.chemistry.molecule_gen import MoleculeBuilder
-from src.chemistry.feature_extraction import MoleculeFeaturizer 
-# Note: We import Featurizer just to get dimensions, though we don't featurize the ligand here (we generate it)
 
 def generate_candidate(protein_pdb_path, checkpoint_path, output_dir, num_samples=5):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"🧪 Starting BioSyn Inference on {device}...")
     
     # --- 1. Load Models ---
+    if not os.path.exists(checkpoint_path):
+        print(f"❌ Error: Checkpoint not found at {checkpoint_path}")
+        return []
+
     print(f"   >> Loading checkpoint: {checkpoint_path}")
     checkpoint = torch.load(checkpoint_path, map_location=device)
     
@@ -35,19 +42,12 @@ def generate_candidate(protein_pdb_path, checkpoint_path, output_dir, num_sample
 
     # --- 2. Process Target Protein ---
     print(f"   >> Parsing target protein: {protein_pdb_path}")
-    parser = ProteinParser()
-    
-    # In a real scenario, we'd need to convert the PDB to a Graph here.
-    # For this prototype, we will simulate the protein embedding to match the mock training.
-    # Why? Because converting a raw PDB to the exact Graph Tensor required by GNNEncoder 
-    # requires a complex topological function (edges based on angstrom distance).
-    # To keep this runnable for you immediately, we use a placeholder embedding derived from the file.
-    
-    # Simulating a "forward pass" of the protein graph for demonstration
-    # In full production, you would call: protein_graph = parser.to_graph(protein_pdb_path)
-    # context = encoder(protein_graph)
+    # In a real scenario, we would parse the PDB here.
+    # parser = ProteinParser()
+    # coords = parser.parse_pdb(protein_pdb_path)
     
     # Mocking the context vector for the demo (Shape: [1, 128])
+    # This simulates the embedding the GNN would produce from the protein
     context = torch.randn(1, 128).to(device) 
     
     # --- 3. Reverse Diffusion (Generation) ---
@@ -62,10 +62,10 @@ def generate_candidate(protein_pdb_path, checkpoint_path, output_dir, num_sample
         num_atoms = torch.randint(15, 25, (1,)).item()
         
         # Expand context for batch size 1
-        # sample() expects context to match batch size
         current_context = context.repeat(1, 1) 
         
         # Run Reverse Diffusion
+        # 
         generated_coords = diffusion.sample(num_samples=1, num_atoms=num_atoms, context=current_context, device=device)
         
         # Remove batch dim -> [atoms, 3]
@@ -92,13 +92,16 @@ def generate_candidate(protein_pdb_path, checkpoint_path, output_dir, num_sample
     return results
 
 if __name__ == "__main__":
-    # Test Run
-    # Create a dummy checkpoint if one doesn't exist just to test syntax
-    if not os.path.exists("checkpoints/biosyn_epoch_5.pt"):
-        print("⚠️ No checkpoint found. Please run train_pipeline.py first.")
-    else:
-        generate_candidate(
-            protein_pdb_path="data/raw/proteins/5R82.pdb", # Ensure this file exists or use dummy
-            checkpoint_path="checkpoints/biosyn_epoch_5.pt",
-            output_dir="results"
-        )
+    # Default Paths
+    pdb_path = "data/raw/proteins/5R82.pdb"
+    ckpt_path = "checkpoints/biosyn_epoch_5.pt"
+    
+    # Check if files exist before running
+    if not os.path.exists(ckpt_path):
+        print(f"⚠️ Warning: Checkpoint {ckpt_path} not found. Running training first is recommended.")
+    
+    generate_candidate(
+        protein_pdb_path=pdb_path,
+        checkpoint_path=ckpt_path,
+        output_dir="results"
+    )
