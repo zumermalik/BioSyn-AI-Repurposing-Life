@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biosyn-ai"
+version = "0.1.0"
+description = "Generative Drug Discovery Pipeline using Geometric Deep Learning"
+authors = [
+  { name = "BioSyn Engineer", email = "engineer@biosyn.ai" },
+]
+dependencies = [
+  "torch>=2.0.0",
+  "torch-geometric",
+  "rdkit",
+  "numpy",
+  "pandas",
+  "pyyaml",
+  "tqdm",
+  "biopython",
+  "networkx"
+]
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "black",
+  "flake8",
+  "jupyter"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

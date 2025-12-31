@@ -1,0 +1,22 @@
+name: biosyn-env
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=11.8  # Adjust based on your GPU
+  - rdkit
+  - biopython
+  - pandas
+  - numpy
+  - pyyaml
+  - tqdm
+  - pip
+  - pip:
+    - torch-geometric
+    - networkx
+    - fs-extra  # This is usually npm, but just in case of wrappers
