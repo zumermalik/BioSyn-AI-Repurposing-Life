@@ -6,13 +6,19 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 from pathlib import Path
 
-# Add project root to path
-sys.path.append(str(Path(__file__).parent.parent.parent))
+# --- PATH FIX ---
+# Ensures Python can find the 'src' folder
+current_file = Path(__file__).resolve()
+project_root = current_file.parent.parent.parent
+sys.path.append(str(project_root))
+# ----------------
+
+# --- FIX IS HERE: Added 'Data' to the import ---
+from torch_geometric.data import Batch, Data
 
 from src.models.gnn_encoder import GNNEncoder
 from src.models.diffusion import BioDiffusion
 from src.utils.data_loader import BioSynDataset
-from torch_geometric.data import Batch, Data
 
 def collate_fn(batch_list):
     """
@@ -33,6 +39,7 @@ def collate_fn(batch_list):
         padded_ligands.append(torch.cat([pos, pad]))
         
         # Create PyG Data object for protein
+        # THIS IS WHERE IT FAILED BEFORE -> Now 'Data' is imported!
         protein_graphs.append(Data(
             x=item['protein_x'], 
             edge_index=item['protein_edge_index']
@@ -43,12 +50,12 @@ def collate_fn(batch_list):
     
     return torch.stack(padded_ligands), protein_batch
 
-def train(config_path='configs/model_config.yaml'):
+def train():
     # --- 1. Setup ---
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"🚀 Starting BioSyn Training on {device}...")
 
-    # Create Checkpoint Dir
+    # Create Checkpoint Dir (Crucial step)
     os.makedirs('checkpoints', exist_ok=True)
 
     # --- 2. Initialize Models ---
@@ -83,11 +90,9 @@ def train(config_path='configs/model_config.yaml'):
             optimizer.zero_grad()
 
             # A. Encode Protein Condition (GNN Forward)
-            # protein_context shape: [batch_size, 128]
             protein_context = encoder(batch_proteins)
 
             # B. Diffusion Training Step
-            # Sample random timesteps
             t = torch.randint(0, diffusion.num_timesteps, (batch_ligands.shape[0],), device=device).long()
             
             # Calculate Diffusion Loss
@@ -109,7 +114,7 @@ def train(config_path='configs/model_config.yaml'):
                 'diffusion': diffusion.state_dict(),
                 'optimizer': optimizer.state_dict(),
             }, f"checkpoints/biosyn_epoch_{epoch+1}.pt")
-            print("💾 Checkpoint saved.")
+            print(f"💾 Checkpoint saved: checkpoints/biosyn_epoch_{epoch+1}.pt")
 
 if __name__ == "__main__":
     train()
