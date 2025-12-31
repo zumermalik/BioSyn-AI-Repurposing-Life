@@ -1,9 +1,10 @@
+
 ```markdown
-# BioSyn AI: Generative Biology & Drug Discovery Pipeline
+# BioSyn AI: Repurposing Life
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Status](https://img.shields.io/badge/Status-v0.1%20(Alpha)-orange.svg)]()
 [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -92,16 +93,31 @@ python src/pipeline/inference_pipeline.py
 ## 📂 Project Structure
 
 ```bash
-biosyn-ai/
-├── src/
+BioSyn-AI-Repurposing-Life/
+├── .github/              # GitHub Actions & Templates
+├── .vscode/              # Editor Configuration
+├── checkpoints/          # Trained Model Weights (.pt)
+│   └── biosyn_epoch_5.pt
+├── configs/              # Hyperparameter Configuration
+│   └── training_config.yaml
+├── data/                 # Data Storage
+│   ├── processed/        # PyTorch Geometric Tensors
+│   └── raw/              # Original PDB/SDF Files
+├── notebooks/            # Jupyter Prototyping Environments
+├── results/              # Generated SMILES (.smi) & Visualizations
+├── src/                  # Source Code
+│   ├── chemistry/        # RDKit Logic & Molecule Builders
 │   ├── ingestion/        # TypeScript/Python Data Fetchers
-│   ├── models/           # PyTorch Geometric GNNs & Diffusion Logic
-│   ├── chemistry/        # RDKit Logic & MoleculeBuilder
+│   ├── models/           # GNN Encoder & Diffusion Decoder
 │   └── pipeline/         # Training & Inference Orchestration
-├── data/                 # Raw PDBs & Processed Tensors
-├── configs/              # Hyperparameter YAMLs
-├── checkpoints/          # Model Weights (.pt)
-└── results/              # Generated SMILES (.smi)
+├── tests/                # Unit Tests
+├── .gitignore            # Git Ignore Rules
+├── LICENSE               # Apache 2.0 License
+├── package.json          # Node.js Dependencies
+├── README.md             # Project Documentation
+├── requirements.txt      # Python Dependencies
+├── roadmap.md            # Future Development Plans
+└── tsconfig.json         # TypeScript Configuration
 
 ```
 
@@ -142,7 +158,3 @@ This project is licensed under the Apache 2.0 License. If you use this architect
 ---
 
 *Maintained by the Builders.*
-
-```
-
-```
