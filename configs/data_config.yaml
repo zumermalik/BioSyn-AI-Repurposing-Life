@@ -1,0 +1,10 @@
+dataset_name: "BioSyn-COVID-19"
+raw_data_source: "RCSB PDB"
+processing:
+  atom_types: ["C", "N", "O", "S", "F", "Cl", "P"]
+  max_atoms: 30
+  graph_type: "undirected"
+split:
+  train: 0.8
+  val: 0.1
+  test: 0.1
