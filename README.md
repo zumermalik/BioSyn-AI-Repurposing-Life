@@ -1,8 +1,19 @@
+These badges are **"Trust Signals"** for other developers. They instantly tell someone:
+
+1. **Python 3.10+**: "I need a modern Python version."
+2. **PyTorch**: "This is a Deep Learning project."
+3. **Apache 2.0**: "I can use this code freely for my own work."
+4. **Status**: "This is an early prototype (don't expect perfection yet)."
+5. **Code Style**: "The code is clean and follows professional standards."
+
+To make them look "good," the standard is to align them all on **one single line** with a small space between them.
+
+Here is your final, polished `README.md`. Copy this entire block.
 
 ```markdown
 # BioSyn AI: Repurposing Life
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/) [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![Status](https://img.shields.io/badge/Status-v0.1%20(Alpha)-orange.svg)]() [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/) [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0) [![Status](https://img.shields.io/badge/Status-v0.1%20(Alpha)-orange.svg)]() [![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 > **"Repurposing Life through Geometric Deep Learning."**
 
@@ -22,6 +33,8 @@ graph LR
     C --> E
     E -->|Denoising| F[3D Atom Cloud]
     F -->|KNN Builder| G[SMILES Candidate]
+
+```
 
 1. **Ingestion:** TypeScript engine fetches raw PDB/SDF files from biological databases.
 2. **Encoder:** A GNN extracts geometric features (invariant to rotation/translation) from the protein pocket.
