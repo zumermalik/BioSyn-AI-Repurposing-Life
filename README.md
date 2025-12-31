@@ -87,31 +87,29 @@ python src/pipeline/inference_pipeline.py
 
 ```bash
 BioSyn-AI-Repurposing-Life/
-├── .github/              # GitHub Actions & Templates
-├── .vscode/              # Editor Configuration
-├── checkpoints/          # Trained Model Weights (.pt)
-│   └── biosyn_epoch_5.pt
 ├── configs/              # Hyperparameter Configuration
-│   └── training_config.yaml
 ├── data/                 # Data Storage
+│   ├── external/         # External Databases (PDBBind/CrossDocked)
 │   ├── processed/        # PyTorch Geometric Tensors
 │   └── raw/              # Original PDB/SDF Files
 ├── notebooks/            # Jupyter Prototyping Environments
-├── results/              # Generated SMILES (.smi) & Visualizations
 ├── src/                  # Source Code
 │   ├── chemistry/        # RDKit Logic & Molecule Builders
 │   ├── ingestion/        # TypeScript/Python Data Fetchers
 │   ├── models/           # GNN Encoder & Diffusion Decoder
-│   └── pipeline/         # Training & Inference Orchestration
+│   ├── pipeline/         # Training & Inference Orchestration
+│   ├── utils/            # Utility Functions
+│   ├── __init__.py       # Package Initialization
+│   └── main.py           # Main Application Entry Point
 ├── tests/                # Unit Tests
-├── .gitignore            # Git Ignore Rules
+├── environment.yml       # Conda Environment Definition
 ├── LICENSE               # Apache 2.0 License
 ├── package.json          # Node.js Dependencies
+├── pyproject.toml        # Python Packaging Configuration
 ├── README.md             # Project Documentation
 ├── requirements.txt      # Python Dependencies
-├── roadmap.md            # Future Development Plans
+├── ROADMAP.md            # Future Development Plans
 └── tsconfig.json         # TypeScript Configuration
-
 ```
 
 ## 🛠️ Development & Testing
