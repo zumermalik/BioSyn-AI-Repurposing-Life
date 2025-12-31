@@ -41,9 +41,6 @@ graph LR
 
 Clone the repository and set up the hybrid environment.
 
-```bash
-### 1. Installation
-Clone the repository and set up the hybrid environment.
 
 ```bash
 # Clone the repo
