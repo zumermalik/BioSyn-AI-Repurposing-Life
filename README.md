@@ -1,69 +1,148 @@
-# 🧬 Biosyn
-**AI + Synthetic Biology Platform for Drug Repurposing**  
-_Unlocking new treatments for cancer and rare diseases using omics intelligence._
+```markdown
+# BioSyn AI: Generative Biology & Drug Discovery Pipeline
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Status](https://img.shields.io/badge/Status-v0.1%20(Alpha)-orange.svg)]()
+[![Code Style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+> **"Repurposing Life through Geometric Deep Learning."**
+
+**BioSyn AI** is an end-to-end generative pipeline designed to imagine novel drug candidates (ligands) that bind to specific protein targets. It combines **E(n)-Equivariant Graph Neural Networks (GNNs)** for protein structure encoding with **3D Denoising Diffusion Probabilistic Models (DDPMs)** for molecule generation.
 
 ---
 
-## 🌱 Overview  
-**Biosynthesiss** is an early-stage biotech concept that integrates **AI-driven drug repurposing**, **multi-omics analysis**, and **synthetic biology modeling** to discover new therapeutic uses for existing FDA-approved drugs.
+## 🧬 Architecture
 
-Our mission is to dramatically reduce the time, cost, and risk of discovering effective treatments for cancer and rare diseases.
+The pipeline follows a closed-loop generative process:
 
-This repository contains the conceptual framework, early research pipeline, and development roadmap for the platform.
+```mermaid
+graph LR
+    A[Protein PDB] -->|Ingestion Engine| B(Geometric Graph)
+    B -->|GNN Encoder| C[Context Embedding]
+    D[Gaussian Noise] -->|Diffusion Model| E{Reverse Process}
+    C --> E
+    E -->|Denoising| F[3D Atom Cloud]
+    F -->|KNN Builder| G[SMILES Candidate]
 
----
+```
 
-## 🚀 Mission  
-To accelerate global drug discovery by transforming underused drugs into life-saving treatments using AI, omics data, and synthetic biology.
-
----
-
-## ❗ The Problem  
-Developing a new drug takes:  
-- **10–15 years**  
-- **$2.6B+ in cost**  
-- **90%+ failure rate**
-
-Meanwhile:  
-- Thousands of FDA-approved drugs remain **underutilized**  
-- Many cancers and rare diseases have **no effective treatment**  
-- Wet-lab validation is expensive and slow  
-
-Drug repurposing is powerful — but requires sophisticated computational and biological insights.
+1. **Ingestion:** TypeScript engine fetches raw PDB/SDF files from biological databases.
+2. **Encoder:** A GNN extracts geometric features (invariant to rotation/translation) from the protein pocket.
+3. **Decoder:** A Diffusion model iteratively refines random noise into stable 3D molecular structures conditioned on the protein embedding.
+4. **Inference:** A robust `MoleculeBuilder` reconstructs valid chemical graphs from 3D point clouds using K-Nearest Neighbors (KNN) logic.
 
 ---
 
-## 🔬 Our Approach  
+## ⚡ Quick Start
 
-### **1. AI-Driven Drug Repurposing**  
-Machine learning models analyze:  
-- Omics datasets  
-- Literature databases  
-- Chemical structure relationships  
-- Disease signatures  
+### Prerequisites
 
-To predict new drug–disease matches.
+* Python 3.10+
+* Node.js (v16+)
+* CUDA-enabled GPU (Recommended)
+
+### 1. Installation
+
+Clone the repository and set up the hybrid environment.
+
+```bash
+# Clone the repo
+git clone [https://github.com/zumermalik/BioSyn-AI-Repurposing-Life.git](https://github.com/zumermalik/BioSyn-AI-Repurposing-Life.git)
+cd BioSyn-AI-Repurposing-Life
+
+# Set up Python Environment (Conda recommended for RDKit compatibility)
+conda create -n biosyn python=3.10 -y
+conda activate biosyn
+
+# Install Core Dependencies
+pip install -r requirements.txt
+
+# Install Ingestion Engine (TypeScript)
+npm install
+
+```
+
+### 2. Run the Pipeline (Zero to Hero)
+
+You can run the entire inference stack with a single command. This will load the pre-trained checkpoint and generate candidates for the target protein `5R82`.
+
+```bash
+# Run Inference
+python src/pipeline/inference_pipeline.py
+
+```
+
+*Expected Output:*
+
+```text
+🧪 Starting BioSyn Inference on cuda...
+   >> Target Protein: 5R82.pdb
+   >> Loading checkpoint: checkpoints/biosyn_epoch_5.pt
+   >> Generating 5 drug candidates...
+      🔹 Candidate 1: CC(=O)Nc1ccc(O)cc1
+      🔹 Candidate 2: CN1C=NC2=C1C(=O)N(C(=O)N2C)C
+✅ Generation Complete. 5 candidates saved to results/
+
+```
 
 ---
 
-### **2. Biological Pathway Simulation**  
-We model how drugs affect:  
-- Gene expression pathways  
-- Protein interaction networks  
-- Disease-specific signaling patterns  
+## 📂 Project Structure
 
-This provides deeper biological validation before actual wet-lab testing.
+```bash
+biosyn-ai/
+├── src/
+│   ├── ingestion/        # TypeScript/Python Data Fetchers
+│   ├── models/           # PyTorch Geometric GNNs & Diffusion Logic
+│   ├── chemistry/        # RDKit Logic & MoleculeBuilder
+│   └── pipeline/         # Training & Inference Orchestration
+├── data/                 # Raw PDBs & Processed Tensors
+├── configs/              # Hyperparameter YAMLs
+├── checkpoints/          # Model Weights (.pt)
+└── results/              # Generated SMILES (.smi)
+
+```
+
+## 🛠️ Development & Testing
+
+We use `pytest` for unit testing the geometric logic and chemical validity.
+
+```bash
+# Run the full test suite
+pytest tests/
+
+```
 
 ---
 
-### **3. Synthetic Biology Optimization**  
-Using computational SynBio design, we explore:  
-- Modified drug variants  
-- Prodrug strategies  
-- Alternative delivery systems  
-- Optimized biosynthesis routes  
+## 🤝 Contributing
 
-This increases therapeutic potential.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. **Fork the Project**
+2. **Create your Feature Branch** (`git checkout -b feature/AmazingFeature`)
+3. **Commit your Changes** (`git commit -m 'Add some AmazingFeature'`)
+4. **Push to the Branch** (`git push origin feature/AmazingFeature`)
+5. **Open a Pull Request**
+
+### Contribution Standards
+
+* **Code Style:** Please use `black` for Python formatting.
+* **Testing:** Ensure all new modules have accompanying tests in `tests/`.
+* **Data:** Do not commit large datasets (PDB/SDF files) to Git. Use the `data/` folder which is ignored by default.
 
 ---
 
+## 📜 Citation & License
+
+This project is licensed under the Apache 2.0 License. If you use this architecture in your research, please link back to this repository.
+
+---
+
+*Maintained by the Builders.*
+
+```
+
+```
