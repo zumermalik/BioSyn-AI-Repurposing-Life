@@ -19,11 +19,11 @@ graph LR
     D[Gaussian Noise] -->|Diffusion Model| E{Reverse Process}
     C --> E
     E -->|Denoising| F[3D Atom Cloud]
-    F -->|KNN Builder| G[SMILES Candidate]
+    F -->|KNN Builder| G[SMILES Candidate]```
    
 
 
- ```1. **Ingestion:** TypeScript engine fetches raw PDB/SDF files from biological databases.
+1. **Ingestion:** TypeScript engine fetches raw PDB/SDF files from biological databases.
 2. **Encoder:** A GNN extracts geometric features (invariant to rotation/translation) from the protein pocket.
 3. **Decoder:** A Diffusion model iteratively refines random noise into stable 3D molecular structures conditioned on the protein embedding.
 4. **Inference:** A robust `MoleculeBuilder` reconstructs valid chemical graphs from 3D point clouds using K-Nearest Neighbors (KNN) logic.
