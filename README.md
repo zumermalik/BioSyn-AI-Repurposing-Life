@@ -42,6 +42,10 @@ graph LR
 Clone the repository and set up the hybrid environment.
 
 ```bash
+### 1. Installation
+Clone the repository and set up the hybrid environment.
+
+```bash
 # Clone the repo
 git clone [https://github.com/zumermalik/BioSyn-AI-Repurposing-Life.git](https://github.com/zumermalik/BioSyn-AI-Repurposing-Life.git)
 cd BioSyn-AI-Repurposing-Life
