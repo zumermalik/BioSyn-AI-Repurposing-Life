@@ -19,9 +19,8 @@ graph LR
     D[Gaussian Noise] -->|Diffusion Model| E{Reverse Process}
     C --> E
     E -->|Denoising| F[3D Atom Cloud]
-    F -->|KNN Builder| G[SMILES Candidate]```
-   
-
+    F -->|KNN Builder| G[SMILES Candidate]
+   ```
 
 1. **Ingestion:** TypeScript engine fetches raw PDB/SDF files from biological databases.
 2. **Encoder:** A GNN extracts geometric features (invariant to rotation/translation) from the protein pocket.
