@@ -139,7 +139,7 @@ Contributions are what make the open-source community such an amazing place to l
 
 * **Code Style:** Please use `black` for Python formatting.
 * **Testing:** Ensure all new modules have accompanying tests in `tests/`.
-* **Data:** Do not commit large datasets (PDB/SDF files) to Git. Use the `data/` folder which is ignored by default.
+* **Data:** Do not commit large datasets (PDB/SDF files) to Git. Use the `data/` folder.
 
 ---
 
